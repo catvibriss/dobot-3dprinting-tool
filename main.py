@@ -51,4 +51,27 @@ def get_temperature():
 def range_map(x: float, x_min: float, x_max: float, out_min: float, out_max: float) -> float:
     return (x-x_min) * (out_max-out_min) / (x_max - x_min) + out_min
 
+def set_home():
+    # NOTE: использовать после листочка
+    print("Up")
+    gsend("G1 Z10")
+    time.sleep(3)
+    gsend("G1 X0 Y0")
+    time.sleep(3)
+    print("Go to min's")
+    gsend(f"G1 {X_MIN} {Y_MIN}")
+    time.sleep(3)
+    gsend("G1 Z0")
+    time.sleep(3)
+    print("G92 set")
+    gsend("G92 X0 Y0 Z0")
     
+def parse_gcode(file_path):
+    with open(file_path, "r+") as gcode_file:
+        gcode_lines = [line.strip() for line in gcode_file]
+
+    for gline in gcode_lines:
+        print(gline)
+        #gsend(gline)
+        
+parse_gcode("benchy.gcode")
